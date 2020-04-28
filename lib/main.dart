@@ -27,6 +27,21 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreCounter = [];
+
+  Icon answerStatus(bool answer){
+    if (answer){
+      return Icon(
+        Icons.check,
+        color: Colors.green,
+      );
+    }else{
+      return Icon(
+        Icons.clear,
+        color: Colors.red,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +68,7 @@ class _QuizPageState extends State<QuizPage> {
               child: Text('True'),
               onPressed: () {
                 setState(() {
+                  scoreCounter.add(answerStatus(true));
                 });
               },
             ),
@@ -68,12 +84,16 @@ class _QuizPageState extends State<QuizPage> {
               child: Text('False'),
               onPressed: () {
                 setState(() {
+                  scoreCounter.add(answerStatus(false));
                 });
               },
             ),
           ),
         ),
-
+        Row(
+          children:
+            scoreCounter,
+        )
       ],
     );
   }

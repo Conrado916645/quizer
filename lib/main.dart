@@ -29,6 +29,18 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreCounter = [];
 
+  List<String>questions = [
+    'Pogi ako.',
+    'Ang pogi pogi ko.',
+    'Ako ang pinaka pogi.'
+  ];
+
+  List<bool> answers =[
+    true,
+    false,
+    true
+  ];
+
   Icon answerStatus(bool answer){
     if (answer){
       return Icon(
@@ -43,6 +55,8 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
+  int questionNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,7 +67,7 @@ class _QuizPageState extends State<QuizPage> {
           flex: 3,
           child: Center(
             child: Text(
-              'Question',
+              questions[questionNumber],
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -68,7 +82,8 @@ class _QuizPageState extends State<QuizPage> {
               child: Text('True'),
               onPressed: () {
                 setState(() {
-                  scoreCounter.add(answerStatus(true));
+                  if(answers[questionNumber] == true) scoreCounter.add(answerStatus(true)); else scoreCounter.add(answerStatus(false));
+                  questionNumber++;
                 });
               },
             ),
@@ -84,7 +99,8 @@ class _QuizPageState extends State<QuizPage> {
               child: Text('False'),
               onPressed: () {
                 setState(() {
-                  scoreCounter.add(answerStatus(false));
+                  if(answers[questionNumber] == false) scoreCounter.add(answerStatus(true)); else scoreCounter.add(answerStatus(false));
+                  questionNumber++;
                 });
               },
             ),
@@ -93,7 +109,7 @@ class _QuizPageState extends State<QuizPage> {
         Row(
           children:
             scoreCounter,
-        )
+        ),
       ],
     );
   }

@@ -46,6 +46,16 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
+  void checkAnswer(bool userAnswer){
+    bool questionAnswer = quizBrain.getQuesionAnswer();
+    if (questionAnswer == userAnswer)
+      scoreCounter.add(answerStatus(true));
+    else
+      scoreCounter.add(answerStatus(false));
+    setState(() {
+      quizBrain.nextQuestion();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,14 +80,7 @@ class _QuizPageState extends State<QuizPage> {
               textColor: Colors.white,
               child: Text('True'),
               onPressed: () {
-                if (quizBrain.getQuesionAnswer() == true)
-                  scoreCounter.add(answerStatus(true));
-                else
-                  scoreCounter.add(answerStatus(false));
-
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -91,13 +94,7 @@ class _QuizPageState extends State<QuizPage> {
               textColor: Colors.white,
               child: Text('False'),
               onPressed: () {
-                if (quizBrain.getQuesionAnswer()== false)
-                  scoreCounter.add(answerStatus(true));
-                else
-                  scoreCounter.add(answerStatus(false));
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                  checkAnswer(false);
               },
             ),
           ),

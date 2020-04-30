@@ -46,8 +46,6 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
-  int questionNumber = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,7 +56,7 @@ class _QuizPageState extends State<QuizPage> {
           flex: 3,
           child: Center(
             child: Text(
-              quizBrain.questionList[questionNumber].questions,
+              quizBrain.getQuesionText(),
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -72,12 +70,13 @@ class _QuizPageState extends State<QuizPage> {
               textColor: Colors.white,
               child: Text('True'),
               onPressed: () {
+                if (quizBrain.getQuesionAnswer() == true)
+                  scoreCounter.add(answerStatus(true));
+                else
+                  scoreCounter.add(answerStatus(false));
+
                 setState(() {
-                  if (quizBrain.questionList[questionNumber] .answers == true)
-                    scoreCounter.add(answerStatus(true));
-                  else
-                    scoreCounter.add(answerStatus(false));
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
@@ -92,12 +91,12 @@ class _QuizPageState extends State<QuizPage> {
               textColor: Colors.white,
               child: Text('False'),
               onPressed: () {
+                if (quizBrain.getQuesionAnswer()== false)
+                  scoreCounter.add(answerStatus(true));
+                else
+                  scoreCounter.add(answerStatus(false));
                 setState(() {
-                  if (quizBrain.questionList[questionNumber].answers == false)
-                    scoreCounter.add(answerStatus(true));
-                  else
-                    scoreCounter.add(answerStatus(false));
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
